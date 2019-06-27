@@ -7,22 +7,22 @@ public class bergsteig {
 
 
     public static void main(String []args){
-        //boolean [][]panel = new boolean[5][5];
-        //for(int i=0;i<panel[0].length;i++) {
-        //    for (int j = 0; j < panel[0].length; j++) {
-        //        panel[i][j]=true;
-        //    }
-        //}
-        //panel[0][2]=false;
-        //panel[1][1]=false;
-        //panel[1][3]=false;
-        //panel[2][1]=false;
-        //panel[3][4]=false;
-        //panel[4][2]=false;
-//
-        //int [] result = bersteig2(panel,-2,4,1);
-        //result = bersteig2(panel,4,4,1);
-        ////result = bersteig(panel,4,0,0,3,1);
+        boolean [][]panel = new boolean[5][5];
+        for(int i=0;i<panel[0].length;i++) {
+            for (int j = 0; j < panel[0].length; j++) {
+                panel[i][j]=true;
+            }
+        }
+        panel[0][2]=false;
+        panel[1][1]=false;
+        panel[1][3]=false;
+        panel[2][1]=false;
+        panel[3][4]=false;
+        panel[4][2]=false;
+
+        int [] result = bersteig2(panel,-2,-4,1);
+        result = bersteig2(panel,4,4,1);
+        result = bersteig(panel,4,0,0,3,1);
         int [][]M = new int[4][2];
         M[0][0]=0;
         M[0][1]=2;
@@ -41,7 +41,18 @@ public class bergsteig {
             M[2][i]=i+2*M[0].length;
         }
         M=combinations(M);
-        System.out.println(existiertMenge(M,4));
+        //for(int i=0; i<M[0].length;i++){
+        //    for(int j=0; j<M.length;j++) {
+        //        M[j][i] = 4;
+        //        M[1][i] = 4;
+        //        M[2][i] = 4;
+        //    }
+        //}
+        try {
+            System.out.println(existiertMenge(M,4));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static int[][] combinations(int[][] X){
@@ -51,7 +62,6 @@ public class bergsteig {
         for(int i=0;i<X[0].length;i++){
             for (int j = 0; j < X[1].length; j++) {
                 for (int k = 0; k < X[2].length; k++) {
-
                         M[b][0]=X[a][i];
                         M[b][1]=X[a+1][j];
                         M[b][2]=X[a+2][k];
@@ -153,10 +163,17 @@ public class bergsteig {
 
     //H2
 
-    public static boolean existiertMenge(int[][] M, int q){
+    public static ArrayList<int[]> existiertMenge(int[][] M, int q) throws Exception {
 
         ArrayList<int[]> points = new ArrayList<>();
-        return existierMengeBack(M, q, points,0,0);
+        if(existierMengeBack(M, q, points,0,0))
+        {
+            return points;
+        }
+        else
+        {
+            throw new Exception();
+        }
 
     }
     public static boolean existierMengeBack(int[][] M, int q, ArrayList<int[]> points, int s,int a){
